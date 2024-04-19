@@ -56,6 +56,8 @@ int main()
     int N = 10;
     char temp = ' ';
 
+    int seed =0;
+
     bool special = false;
     bool big = false;
     bool small = false;
@@ -63,6 +65,8 @@ int main()
 
     printf("Jaka dlugosc powinno miec haslo?(bazowo 10 znakow): \n");
     scanf("%d", &N);
+    printf("Jakie powinno być nasiono?(losowe dla 0): \n");
+    scanf("%d", &seed);
     printf("Czy haslo ma zawierac znaki specjalne? (t/n): \n");
     scanf(" %c", &temp);
     if (temp == 't') {
