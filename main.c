@@ -4,13 +4,17 @@
 #include <time.h>
 #include <stdbool.h>
 
-void passwordGenerator(int N, bool special, bool big, bool small, bool numbersB)
+void passwordGenerator(int N, bool special, bool big, bool small, bool numbersB, int seed)
 {
     int i = 0;
 
     int randomizer = 0;
-    srand((unsigned int)(time(NULL)));
-
+    if (seed != 0) {
+        srand(seed);
+    }
+    else{
+        srand((unsigned int)(time(NULL)));
+    }
     char numbers[] = "0123456789";
 
     char letter[] = "abcdefghijklmnoqprstuvwyzx";
@@ -58,39 +62,51 @@ int main()
 
     int seed =0;
 
-    bool special = false;
-    bool big = false;
-    bool small = false;
-    bool numbers = false;
+    bool special = true;
+    bool big = true;
+    bool small = true;
+    bool numbers = true;
+
+    char input[100];
 
     printf("Jaka dlugosc powinno miec haslo?(bazowo 10 znakow): \n");
-    scanf("%d", &N);
-    printf("Jakie powinno być nasiono?(losowe dla 0): \n");
-    scanf("%d", &seed);
-    printf("Czy haslo ma zawierac znaki specjalne? (t/n): \n");
-    scanf(" %c", &temp);
-    if (temp == 't') {
-        special = true;
+    char temp2[] = "";
+    scanf( "%s", temp2);
+    N = atoi(temp2);
+    if (N == 0) {
+        N = 10;
     }
-    temp == ' ';
-    printf("Czy haslo ma zawierac wielkie litery? (t/n): \n");
-    scanf(" %c", &temp);
-    if (temp == 't') {
-        big = true;
+    printf("Jakie powinno byc nasiono?(losowe dla 0): \n");
+    scanf( "%s", temp2);
+    seed = atoi(temp2);
+    if (seed == 0) {
+        seed = 0;
     }
-    temp == ' ';
-    printf("Czy haslo ma zawierac male litery? (t/n): \n");
-    scanf(" %c", &temp);
-    if (temp == 't') {
-        small = true;
+    printf("Czy haslo ma zawierac znaki specjalne? (t/n)(bazowo t): \n");
+    scanf(" %s", &temp);
+    if (temp == 'n') {
+        special = false;
     }
-    temp == ' ';
-    printf("Czy haslo ma zawierac numery? (t/n): \n");
-    scanf(" %c", &temp);
-    if (temp == 't') {
-        numbers = true;
+    temp = ' ';
+    printf("Czy haslo ma zawierac wielkie litery? (t/n)(bazowo t): \n");
+    scanf(" %s", &temp);
+    if (temp == 'n') {
+        big = false;
     }
-    temp == ' ';
-    passwordGenerator(N, special, big, small,numbers);
+    temp = ' ';
+    printf("Czy haslo ma zawierac male litery? (t/n)(bazowo t): \n");
+    scanf(" %s", &temp);
+    if (temp == 'n') {
+        small = false;
+    }
+    temp = ' ';
+    printf("Czy haslo ma zawierac numery? (t/n)(bazowo t): \n");
+    scanf(" %s", &temp);
+    if (temp == 'n') {
+        numbers = false;
+    }
+    temp = ' ';
+    passwordGenerator(N, special, big, small,numbers,seed);
+
     return 0;
 }

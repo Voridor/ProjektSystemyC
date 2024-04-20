@@ -1,3 +1,3 @@
-/home/voridor/Dokumenty/GitHub/ProjektSystemyC/cmake-build-debug/CMakeFiles/ProjektSystemy.dir
-/home/voridor/Dokumenty/GitHub/ProjektSystemyC/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/voridor/Dokumenty/GitHub/ProjektSystemyC/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Kacper/CLionProjects/ProjektSystemy/cmake-build-debug/CMakeFiles/ProjektSystemy.dir
+C:/Users/Kacper/CLionProjects/ProjektSystemy/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Kacper/CLionProjects/ProjektSystemy/cmake-build-debug/CMakeFiles/rebuild_cache.dir
