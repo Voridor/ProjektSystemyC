@@ -1,4 +1,9 @@
 
 cmake-build-debug/Testing/Temporary/LastTest.log
 .idea/vcs.xml
+<<<<<<< Updated upstream
 /cmake-build-debug
+=======
+cmake-build-debug
+>>>>>>> Stashed changes
+cmake-build-debug/.cmake/api/v1/reply/cache-v2-b629ee53cf44a6b81adf.json

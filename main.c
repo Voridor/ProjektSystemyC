@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <regex.h>
 
 //Funkcja generująca hasło
 //N - długość hasła
@@ -66,7 +67,7 @@ void passwordGenerator(int N, bool special, bool big, bool small, bool numbersB,
 
 int main()
 {
-    int N = 10;
+    int Numer = 10;
     char temp = ' ';
 
     int seed =0;
@@ -76,26 +77,63 @@ int main()
     bool small = true;
     bool numbers = true;
 
-    char input[100];
 
+    regex_t regex;
+    int reti;
+    char msgbuf[100];
+
+    reti = regcomp(&regex, "^[0-9]+$", REG_EXTENDED);
+    if (reti) {
+        fprintf(stderr, "Could not compile regex\n");
+        return 1;
+    }
+
+    char input[100];
     //Pytanie o długość hasła
     printf("Jaka dlugosc powinno miec haslo?(bazowo 10 znakow): \n");
-    char temp2[] = "";
-    scanf( "%s", temp2);
-    N = atoi(temp2);
-    if (N == 0) {
-        N = 10;
+    scanf( "%s", input);
+    reti = regexec(&regex, input, 0, NULL, 0);
+    if (!reti) {
+        puts("Input is a number");
+
+        /* Convert string to integer */
+        Numer = atoi(input);
+        if (Numer < 0) {
+            puts("Number is negative");
+            return 1;
+        }
+        printf("Recovered number: %d\n", Numer);
+    } else if (reti == REG_NOMATCH) {
+        puts("Złe dane, ustawiono domyślną wartość 10 znaków");
+        Numer = 10;
+    } else {
+        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+        fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+        return 1;
     }
+    //N = atoi(temp2);
     //Pytanie o ziarno dla generatora liczb losowych
     printf("Jakie powinno byc nasiono?(losowe dla 0): \n");
-    scanf( "%s", temp2);
-    seed = atoi(temp2);
-    if (seed == 0) {
+    char input1[100];
+    scanf( "%s", input1);
+    reti = regexec(&regex, input, 0, NULL, 0);
+    if (!reti) {
+        puts("Wpisano liczbe");
+
+        /* Convert string to integer */
+        int seed = atoi(input);
+        printf("Nasiono: %d\n", seed);
+    } else if (reti == REG_NOMATCH) {
+        puts("Złe dane, ustawiono domyślną wartość 0");
         seed = 0;
+    } else {
+        regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+        fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+        return 1;
     }
     //Pytanie o zawieranie znaków specjalnych
     printf("Czy haslo ma zawierac znaki specjalne? (t/n)(bazowo t): \n");
-    scanf(" %s", &temp);
+    scanf("%s", &temp);
     if (temp == 'n') {
         special = false;
     }
@@ -122,7 +160,10 @@ int main()
     }
     temp = ' ';
     //Wywołanie funkcji generującej hasło
-    passwordGenerator(N, special, big, small,numbers,seed);
+    if (Numer>1000){
+        Numer=10;
+    }
+    passwordGenerator(Numer, special, big, small,numbers,seed);
 
     return 0;
 }
